@@ -97,6 +97,36 @@ client.connect((err) => {
         res.send(result.modifiedCount > 0);
       });
   });
+
+  app.post("/add-service", (req, res) => {
+    const service = req.body;
+    servicesCollection.insertOne(service).then((result) => {
+      res.send(result);
+    });
+  });
+
+  app.post("/add-admin", (req, res) => {
+    const admin = req.body;
+    adminsCollection.insertOne(admin).then((result) => {
+      res.send(result);
+    });
+  });
+
+  app.delete("/delete/:id", (req, res) => {
+    servicesCollection
+      .deleteOne({ _id: ObjectId(req.params.id) })
+      .then((result) => {
+        res.send(result.deletedCount > 0);
+      });
+  });
+
+  app.delete("/delete-feedback/:id", (req, res) => {
+    feedbacksCollection
+      .deleteOne({ _id: ObjectId(req.params.id) })
+      .then((result) => {
+        res.send(result.deletedCount > 0);
+      });
+  });
 });
 
 app.listen(port);
